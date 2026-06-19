@@ -26,6 +26,9 @@ var version = "devel"
 
 func main() {
 	config := config.Get()
+	if port := os.Getenv("PORT"); port != "" {
+		config.Listen = "0.0.0.0:" + port
+	}
 	ctx := slog.With("listen", config.Listen)
 	options, err := redis.ParseURL(config.RedisURL)
 	if err != nil {
